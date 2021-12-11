@@ -16,6 +16,9 @@ utifrån angiven ränta, aktuellt saldo och storlek på månadsinsättningen.
 */
 
 #include <iostream>
+#include <unistd.h>
+#include <cstdlib>
+#include <signal.h>
 
 using namespace std;
 
@@ -53,9 +56,18 @@ bool check_number(string str) {
     return true;
 }
 
+// Funktion för att hantera interrupt från användaren
+void signal_callback_handler(int signum) {
+   cout << "\n\nJaså minsann! Du tryckte CTRL+C och skickade signal nr: " << signum << "\n\n";
+   exit(signum);
+}
+
 // Funktionen main() returnerar ett heltalsvärde (int)
 
 int main () {
+
+    // Registrera signalhanteraren och hantera CTRL+C (SIGINT)
+    signal(SIGINT, signal_callback_handler);
 
     // While loop för att hantera huvudmenyn
     // Så länge användaren inte väljer att avsluta kommer huvudmenyn att skrivas ut på nytt
@@ -105,7 +117,7 @@ int main () {
                 else {
                     cout << "Du måste ange belopp med siffror och utan decimaler!";
                     cout << "\n\nTryck 0 för att komma vidare\n";
-                    cin >> insBelopp;
+                    cin >> tempString;
                     break;
                 }
                 saldo = saldo + insBelopp;
@@ -129,7 +141,7 @@ int main () {
                 else {
                     cout << "Du måste ange belopp med siffror och utan decimaler!";
                     cout << "\n\nTryck 0 för att komma vidare\n";
-                    cin >> insBelopp;
+                    cin >> tempString;
                     break;
                 }
                 saldo = saldo - uttagsBelopp;
@@ -154,11 +166,35 @@ int main () {
 
             case 'R': case 'r':
                 cout << "\nHur mycket pengar är ditt mål att ha på kontot?: ";
-                cin >> malSaldo;
+                cin >> tempString;
+                if (check_number(tempString))
+                    malSaldo = stoi(tempString);
+                else {
+                    cout << "Du måste ange belopp med siffror och utan decimaler!";
+                    cout << "\n\nTryck 0 för att komma vidare\n";
+                    cin >> tempString;
+                    break;
+                }
                 cout << "\nHur mycket kan du sätta in varje månad?: ";
-                cin >> mIns;
+                cin >> tempString;
+                if (check_number(tempString))
+                    mIns = stoi(tempString);
+                else {
+                    cout << "Du måste ange belopp med siffror och utan decimaler!";
+                    cout << "\n\nTryck 0 för att komma vidare\n";
+                    cin >> tempString;
+                    break;
+                }
                 cout << "\nAnge räntesats i procent: ";
-                cin >> rSats;
+                cin >> tempString;
+                if (check_number(tempString))
+                    rSats = stoi(tempString);
+                else {
+                    cout << "Du måste ange belopp med siffror och utan decimaler!";
+                    cout << "\n\nTryck 0 för att komma vidare\n";
+                    cin >> tempString;
+                    break;
+                }
                 cout << "\nDitt nuvarande saldo är: ";
                 cout << saldo;
                 tempSaldo = saldo;
