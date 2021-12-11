@@ -16,6 +16,7 @@ utifrån angiven ränta, aktuellt saldo och storlek på månadsinsättningen.
 */
 
 #include <iostream>
+
 using namespace std;
 
 // Skapa variabel för menyvalet. Typen char räcker eftersom den bara ska lagra ett tecken
@@ -38,6 +39,19 @@ int antalAr = 0;
 // Typen double är vald för att kunna hantera stora tal med decimaler 
 
 double tempSaldo = 0, saldo = 0, malSaldo;
+
+// Variabel för att hålla en tillfällig sträng för att kontrollera vad användaren har matat in
+
+string tempString;
+
+// Funktion för att kontrollera om inmatat värde är en siffra
+
+bool check_number(string str) {
+   for (int i = 0; i < str.length(); i++)
+   if (isdigit(str[i]) == false)
+      return false;
+    return true;
+}
 
 // Funktionen main() returnerar ett heltalsvärde (int)
 
@@ -64,7 +78,14 @@ int main () {
         // Läs in användarens menyval och lagra svaret i en variabel
 
         cout << "\n\nAnge menyval: ";
-        cin >> menyVal;
+        cin >> tempString;
+
+        if(tempString.length() != 1) {
+            cout << "Ogiltigt val! Endast ett tecken får anges! I, U, S, R eller A är tillåtna!";
+            menyVal = 'x';
+        } else {
+            menyVal = tempString[0];
+        }
 
         // En switch för att hantera alla de olika menyvalen
 
@@ -78,12 +99,20 @@ int main () {
                 cout << "\n\nAktuellt saldo är: ";
                 cout << saldo;
                 cout << "\n\nAnge belopp att sätta in: ";
-                cin >> insBelopp; 
+                cin >> tempString;
+                if (check_number(tempString))
+                    insBelopp = stoi(tempString);
+                else {
+                    cout << "Du måste ange belopp med siffror och utan decimaler!";
+                    cout << "\n\nTryck 0 för att komma vidare\n";
+                    cin >> insBelopp;
+                    break;
+                }
                 saldo = saldo + insBelopp;
                 cout << "\nDitt saldo är nu: ";
                 cout << saldo;
                 cout << "\n\nTryck 0 för att komma vidare\n";
-                cin >> insBelopp;
+                cin >> tempString;
                 break;
 
             // Om användaren väljer uttag skriver vi ut aktuellt saldo och 
@@ -94,12 +123,20 @@ int main () {
                 cout << "\n\nAktuellt saldo är: ";
                 cout << saldo;
                 cout << "\n\nAnge belopp att ta ut: ";
-                cin >> uttagsBelopp; 
+                cin >> tempString;
+                if (check_number(tempString))
+                    uttagsBelopp = stoi(tempString);
+                else {
+                    cout << "Du måste ange belopp med siffror och utan decimaler!";
+                    cout << "\n\nTryck 0 för att komma vidare\n";
+                    cin >> insBelopp;
+                    break;
+                }
                 saldo = saldo - uttagsBelopp;
                 cout << "\nDitt saldo är nu: ";
                 cout << saldo;
                 cout << "\n\nTryck 0 för att komma vidare\n";
-                cin >> insBelopp;
+                cin >> tempString;
                 break;
 
             // Om användaren väljer saldo skriver vi ut det aktuella saldot. 
@@ -108,7 +145,7 @@ int main () {
                 cout << "\nDitt saldo är: ";
                 cout << saldo;
                 cout << "\n\nTryck 0 för att komma vidare\n";
-                cin >> insBelopp;
+                cin >> tempString;
                 break;   
 
             // Om användaren väljer räntebetalning frågar vi efter ett antal 
@@ -136,7 +173,7 @@ int main () {
                 cout << "\nDu kommer att uppnå ditt målsaldo efter " << antalAr << " år";
                 cout << "\nDitt saldo efter " << antalAr << " år är " << tempSaldo;
                 cout << "\n\nTryck 0 för att komma vidare\n";
-                cin >> insBelopp;
+                cin >> tempString;
                 break;
 
             // Om användaren väljer att avsluta tackar vi för användningen och
@@ -152,7 +189,7 @@ int main () {
             default:
                 cout << "\n\nOgiltigt menyval! Försök igen";
                 cout << "\n\nTryck 0 för att komma vidare\n";
-                cin >> insBelopp;
+                cin >> tempString;
                 break;
                 
             
