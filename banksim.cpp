@@ -1,10 +1,3 @@
-/* 
-Applikation: Banksimulator
-Skapad av: Emelie Johansen
-Skapad: 2021-12-05
-Version: 1.0.0
-*/
-
 /*
 Denna banksimulator simulerar en bank där användaren kan välja mellan fem olika funktioner.
 Insättning, Uttag, Saldo, Räntebetalning och Avslut.
@@ -91,6 +84,8 @@ int main () {
 
         cout << "\n\nAnge menyval: ";
         cin >> tempString;
+
+        // Kontrollera så att endast ett tecken angess
 
         if(tempString.length() != 1) {
             cout << "Ogiltigt val! Endast ett tecken får anges! I, U, S, R eller A är tillåtna!";
@@ -239,30 +234,3 @@ int main () {
 
     return 0;
 }
-
-/* 
-Utvärdering
-
-Banksimulatorn var intressant att utforma eftersom den innehåller så många olika delar.
-Huvudmenyn med sina olika alternativ valde jag att göra med hjälp av en switch som
-hanterar de olika funktionerna i simulatorn. Det gör att jag har fått en förståelse för
-hur jag enkelt kan komplettera med ytterligare funktioner i framtida versioner av simulatorn.
-
-Jag bedömer att användarvänligheten är hög eftersom alla menyval är självförklarande och att 
-simulatorn hela tiden skriver ut information på skärmen åt användaren. 
-
-Banksimulatorn innehåller flera verklighetstrogna funktioner som används i riktiga banker.
-Funktioner som insättning, uttag och saldobesked finns på alla banker.
-Att räkna ut antal år det tar att spara ihop till ett visst belopp var väldigt intressant för
-mig eftersom jag då enkelt kan räkna på olika scenarion. 
-
-På en riktig bank sparas saldot för varje kund även om programmet avslutas men i den här
-simulatorn nollställs saldot vid varje avslut och den kan bara hantera en kund.
-Framtida versioner av simulatorn skulle kunna be användaren att logga in och spara alla 
-transaktioner i en fil som lagras på hårddisken.
-
-Framtida versioner bör också kompletteras med robusta felkontroller som kontrollerar alla
-inmatningar användaren gör innan variablarna används i simulatorn. Oväntade fel behöver
-också fångas upp och hanteras på ett snyggt sätt så att informativa felmeddelanden skrivs
-ut på skärmen.
-*/
